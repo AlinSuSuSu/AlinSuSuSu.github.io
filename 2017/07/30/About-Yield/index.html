@@ -9,17 +9,17 @@
   
   
   
-  <meta name="description" content="关于yield">
+  <meta name="description" content="写python遇到yield不是很懂。。。网上搜罗了一番 yield在python中作为生成器理解，主要用处是可以迭代，简化了很多运算模型。 yield是一个表达式，是有返回值的，如果说函数中含有yield时，它将不再是一个普通的函数，而是一个生成器，当该函数被调用时，不会自动执行，而是暂停。工作原理就是通过重复调用next()方法，直到捕获异常。yield 是一个类似 return 的关键字，迭">
 <meta property="og:type" content="article">
 <meta property="og:title" content="About Yield">
 <meta property="og:url" content="http://yoursite.com/2017/07/30/About-Yield/index.html">
 <meta property="og:site_name" content="Su&#39;s Blog">
-<meta property="og:description" content="关于yield">
+<meta property="og:description" content="写python遇到yield不是很懂。。。网上搜罗了一番 yield在python中作为生成器理解，主要用处是可以迭代，简化了很多运算模型。 yield是一个表达式，是有返回值的，如果说函数中含有yield时，它将不再是一个普通的函数，而是一个生成器，当该函数被调用时，不会自动执行，而是暂停。工作原理就是通过重复调用next()方法，直到捕获异常。yield 是一个类似 return 的关键字，迭">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-07-30T13:20:40.000Z">
+<meta property="og:updated_time" content="2017-07-30T15:55:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="About Yield">
-<meta name="twitter:description" content="关于yield">
+<meta name="twitter:description" content="写python遇到yield不是很懂。。。网上搜罗了一番 yield在python中作为生成器理解，主要用处是可以迭代，简化了很多运算模型。 yield是一个表达式，是有返回值的，如果说函数中含有yield时，它将不再是一个普通的函数，而是一个生成器，当该函数被调用时，不会自动执行，而是暂停。工作原理就是通过重复调用next()方法，直到捕获异常。yield 是一个类似 return 的关键字，迭">
   
     <link rel="alternate" href="/atom.xml" title="Su&#39;s Blog" type="application/atom+xml">
   
@@ -144,7 +144,13 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="关于yield"><a href="#关于yield" class="headerlink" title="关于yield"></a>关于yield</h3>
+        <p>写python遇到yield不是很懂。。。网上搜罗了一番</p>
+<p>yield在python中作为生成器理解，主要用处是可以迭代，简化了很多运算模型。</p>
+<p>yield是一个表达式，是有返回值的，如果说函数中含有yield时，它将不再是一个普通的函数，而是一个生成器，当该函数被调用时，不会自动执行，而是暂停。工作原理就是通过重复调用next()方法，直到捕获异常。yield 是一个类似 return 的关键字，迭代一次遇到yield时就返回yield后面的值。重点是：下一次迭代时，从上一次迭代遇到的yield后面的代码开始执行。</p>
+<p>yield起源于对一般function中return的扩展，在一个function，必须有一个返回值列于return之后，且return意味中function的结束，一旦结束之后，函数里面的变量将被全部抛弃，如果需要让函数暂停下来，并返回当前所在地方的值，接收到后面的命令时又继续前进。</p>
+<p>就像菲波那切数列，它是一个自循环数列，按照循环算法需要很大的运算量，同时，也并不知道何时会停下运算，如果采用动态记录的话，就会非常简单：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#菲波那切数列：每一个数都等于前两个数的和</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(to = <span class="number">10</span>)</span>:</span></div><div class="line">    curr = <span class="number">0</span></div><div class="line">    next = <span class="number">1</span></div><div class="line">    count = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> count &lt; to:</div><div class="line">        <span class="keyword">yield</span> curr</div><div class="line">        curr = next</div><div class="line">        next = curr + next </div><div class="line">        count += <span class="number">1</span></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> fib(<span class="number">10</span>):</div><div class="line">        print(x + <span class="number">1</span>)</div><div class="line">        </div><div class="line"><span class="string">'''</span></div><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">5</div><div class="line">9</div><div class="line">17</div><div class="line">33</div><div class="line">65</div><div class="line">129</div><div class="line">257</div><div class="line">'''</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">fun2</span><span class="params">()</span>:</span>  </div><div class="line">    <span class="keyword">print</span> <span class="string">'first'</span>  </div><div class="line">    <span class="keyword">yield</span> <span class="number">5</span>  </div><div class="line">    <span class="keyword">print</span> <span class="string">'second'</span>  </div><div class="line">    <span class="keyword">yield</span> <span class="number">23</span>  </div><div class="line">    <span class="keyword">print</span> <span class="string">'end...'</span>    </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>g1 = fun2()  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()             <span class="comment">#第一次运行,暂停在yield 5               </span></div><div class="line">first  </div><div class="line"><span class="number">5</span>  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()             <span class="comment">#第二次运行,暂停在yield 23  </span></div><div class="line">second  </div><div class="line"><span class="number">23</span>  </div><div class="line"><span class="meta">&gt;&gt;&gt; </span>g1.next()             <span class="comment">#第三次运行,由于之后没有yield,再次next()就会抛出错误  </span></div><div class="line">end...  </div><div class="line">Traceback (most recent call last):  </div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;  </div><div class="line">StopIteration</div></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="entry-meta entry-footer">
@@ -213,7 +219,7 @@ var a = new Donate({
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于yield"><span class="nav-number">1.</span> <span class="nav-text">关于yield</span></a></li></ol>
+      <ol class="nav">无</ol>
     
     </div>
   </aside>
