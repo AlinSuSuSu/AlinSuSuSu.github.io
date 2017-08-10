@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          someproblemsimet - undefined
+          关于threading - undefined
         
     </title>
 
-    <link rel="canonical" href="http://yoursite.com/2017/08/06/someproblemsimet/">
+    <link rel="canonical" href="http://yoursite.com/2017/08/10/关于threading/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -86,12 +86,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
+                              <a class="tag" href="/tags/#python" title="python">python</a>
+                            
                         </div>
-                        <h1>someproblemsimet</h1>
+                        <h1>关于threading</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by SuQ on
-                            2017-08-06
+                            2017-08-10
                         </span>
                     </div>
                 
@@ -208,23 +210,7 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <ol>
-<li><p>python 解决NAMEError：name ‘reload’ is not defined的问题</p>
-<ul>
-<li><p>对于python 2.x:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</div></pre></td></tr></table></figure>
-</li>
-<li><p>对于python&lt;=3.3:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> imp</div><div class="line">imp.reload(sys)</div><div class="line"><span class="string">'''</span></div><div class="line">python3与python 2有很大的区别，python3系统默认使用的是UTF-8编码，所以，对于使用的是python3的情况不需要使用sys.setdefaultencoding('utf-8')这段代码，并且python3中已经没有setdefaultencoding这个函数了</div><div class="line"> '''</div></pre></td></tr></table></figure>
-</li>
-<li><p>对于python&gt;=3.4:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> importlib</div><div class="line">importlib.reload(sys)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>在python3中已经没有StringIO模块，修改为io模块</p>
-</li>
-</ol>
+                <p>python中的threading模块包含了一下的一些方法：</p>
 
                 
 
@@ -232,13 +218,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2017/08/09/Beautiful-Soup/" data-toggle="tooltip" data-placement="top" title="Beautiful Soup">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2017/07/31/About-urllib2/" data-toggle="tooltip" data-placement="top" title="About urllib2">Next Post &rarr;</a>
+                            <a href="/2017/08/09/Beautiful-Soup/" data-toggle="tooltip" data-placement="top" title="Beautiful Soup">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
