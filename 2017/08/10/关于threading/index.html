@@ -6,23 +6,23 @@
   <title>关于threading | Su&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="keywords" content="python" />
+  <meta name="keywords" content="Python" />
   
   
   
   
-  <meta name="description" content="python中的threading模块包含了一下的一些方法：">
-<meta name="keywords" content="python">
+  <meta name="description" content="threading模块包含的方法python中的threading模块包含了一下的一些方法：  threading.acitve_count()返回正在运行的线程对象的个数，返回的个数和enumerate()方法返回的线程列表长度一致。 threading.current_thread()返回当前线程对象。如果调用者的控制线程不是通过threading模块创建的，将会返回被限制功能的虚拟线程对象">
+<meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于threading">
 <meta property="og:url" content="http://yoursite.com/2017/08/10/关于threading/index.html">
 <meta property="og:site_name" content="Su&#39;s Blog">
-<meta property="og:description" content="python中的threading模块包含了一下的一些方法：">
+<meta property="og:description" content="threading模块包含的方法python中的threading模块包含了一下的一些方法：  threading.acitve_count()返回正在运行的线程对象的个数，返回的个数和enumerate()方法返回的线程列表长度一致。 threading.current_thread()返回当前线程对象。如果调用者的控制线程不是通过threading模块创建的，将会返回被限制功能的虚拟线程对象">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-08-10T08:43:12.000Z">
+<meta property="og:updated_time" content="2017-08-11T07:52:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于threading">
-<meta name="twitter:description" content="python中的threading模块包含了一下的一些方法：">
+<meta name="twitter:description" content="threading模块包含的方法python中的threading模块包含了一下的一些方法：  threading.acitve_count()返回正在运行的线程对象的个数，返回的个数和enumerate()方法返回的线程列表长度一致。 threading.current_thread()返回当前线程对象。如果调用者的控制线程不是通过threading模块创建的，将会返回被限制功能的虚拟线程对象">
   
     <link rel="alternate" href="/atom.xml" title="Su&#39;s Blog" type="application/atom+xml">
   
@@ -145,7 +145,35 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <p>python中的threading模块包含了一下的一些方法：</p>
+        <h3 id="threading模块包含的方法"><a href="#threading模块包含的方法" class="headerlink" title="threading模块包含的方法"></a>threading模块包含的方法</h3><p>python中的threading模块包含了一下的一些方法：</p>
+<ol>
+<li>threading.acitve_count()返回正在运行的线程对象的个数，返回的个数和enumerate()方法返回的线程列表长度一致。</li>
+<li>threading.current_thread()返回当前线程对象。如果调用者的控制线程不是通过threading模块创建的，将会返回被限制功能的虚拟线程对象</li>
+<li>threading.get_indent()返回当前线程的线程标识符，它的值没有实际意义。</li>
+<li>threading.enumerate()返回当前运行中的线程列表，包括守护线程、主线程，由current_thread（）创建的虚拟线程。不包括终止的线程和尚未启动的线程。</li>
+<li>threading.main_thread()返回主线程对象，在正常情况下，主线程是有python解释器开始的线程</li>
+</ol>
+<a id="more"></a>
+<p>​     …</p>
+<h3 id="Thread对象"><a href="#Thread对象" class="headerlink" title="Thread对象"></a>Thread对象</h3><p>Thread类是一种在单独的控制线程中运行的活动，只有两种方法来具象这个活动：给构造函数传递一个可调用对象，或者在子类中覆盖run()方法。在这个类中国年只有__init__()和run()方法可以被覆盖。</p>
+<p>一旦线程对象被创建，必须通过调用start()方法来开启线程活动，将会调用另一个单独的控制线程中的run()方法。</p>
+<p>线程只有被启动就会处于活跃状态，只有在run()终止或者诱发了一个未处理的异常才会终止线程，可以使用is_alive()方法来检测线程是否处于活跃状态。</p>
+<p>join()方法将会阻止线程的调用，直到调用join()方法的线程终止。</p>
+<p>线程有名字，可以传递给构造函数，并通过该属性读取或者修改线程名。</p>
+<p>class threading.Thread(<em>group=None</em>, <em>target=None</em>, <em>name=None</em>, <em>args=()</em>, <em>kwargs={}</em>, <em>**, </em>daemon=None*)</p>
+<p>如果子类覆盖了构造函数，那么必须在对线程操作前调用基类构造函数的Thread.__init__()方法。</p>
+<p>start()启动线程，每个线程最多且必须调用一次</p>
+<p>run()表示线程活动的方法。</p>
+<p>join()等待线程终止。</p>
+<p>name()</p>
+<p>getName()</p>
+<p>setName()</p>
+<p>ident()</p>
+<p>is_alive()</p>
+<p>daemon()一个布尔值，指示此线程是否为守护线程（True）或否（False）。这必须在start()被调用之前设置。主线程不是守护线程，因此在主线程中创建的所有线程都默认为daemon= False。</p>
+<p>isDaemon()</p>
+<p>setDaemon()</p>
+<p>来自：<a href="https://docs.python.org/3.6/library/threading.html" target="_blank" rel="external">https://docs.python.org/3.6/library/threading.html</a></p>
 
       
     </div>
@@ -153,7 +181,7 @@ var themeMenus = {};
       
       
   <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
       
 
@@ -214,7 +242,7 @@ var themeMenus = {};
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav">无</ol>
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#threading模块包含的方法"><span class="nav-number">1.</span> <span class="nav-text">threading模块包含的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread对象"><span class="nav-number">2.</span> <span class="nav-text">Thread对象</span></a></li></ol>
     
     </div>
   </aside>
