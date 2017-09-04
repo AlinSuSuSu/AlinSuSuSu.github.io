@@ -140,7 +140,7 @@ var themeMenus = {};
 
           
             <div class="entry-thumbnail">
-              <a href="/2017/09/04/cookies详解/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/2" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+              <a href="/2017/09/04/cookies详解/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/6" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
             </div>
             <div class="entry-summary">
             (来自 http://blog.csdn.net/u012175089/article/details/70054806)
@@ -152,79 +152,6 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
             <a href="/2017/09/04/cookies详解/#more">阅读全文</a>
           </p>
         </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cookie/">cookie</a></li></ul>
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-pythonbasic"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/02/pythonbasic/">cookie的用法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/09/02/pythonbasic/" class="article-date">
-	  <time datetime="2017-09-02T03:22:16.000Z" itemprop="datePublished">九月 2, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h4 id="python-cookie的使用"><a href="#python-cookie的使用" class="headerlink" title="python cookie的使用"></a>python cookie的使用</h4><p>（来自<a href="http://cuiqingcai.com/968.html" target="_blank" rel="external">http://cuiqingcai.com/968.html</a> ，基于python2）</p>
-<p>当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeout。</p>
-<p>如果我们需要用到Cookie，只用这个opener是不能达到目的的，所以我们需要创建更一般的opener来实现对Cookie的设置。</p>
-<p>&lt;!— more —&gt;</p>
-<p>cookielib模块的主要作用是提供可存储cookie的对象，以便于与urllib2模块配合使用来访问Internet资源。Cookielib模块非常强大，我们可以利用本模块的CookieJar类的对象来捕获cookie并在后续连接请求时重新发送，比如可以实现模拟登录功能。该模块主要的对象有CookieJar、FileCookieJar、MozillaCookieJar、LWPCookieJar。</p>
-<p>它们的关系：CookieJar —-派生—-&gt;FileCookieJar  —-派生—–&gt;MozillaCookieJar和LWPCookieJar</p>
-<p>对于python3.4 cookie结构图:</p>
-<p>​                  CookieJar<em>__</em>  </p>
-<p>​                       /     \      \  </p>
-<p>​          FileCookieJar      \      \  </p>
-<p>​           /    |   \         \      \  </p>
-<p>MozillaCookieJar | LWPCookieJar \      \  </p>
-<p>​                |               |      \  </p>
-<p>​               |   —MSIEBase |       \  </p>
-<p>​               |  /      |     |        \  </p>
-<p>​               | /   MSIEDBCookieJar BSDDBCookieJar  </p>
-<p>​               |/  </p>
-<p>​           MSIECookieJar </p>
-<h4 id="获取Cookie保存到变量"><a href="#获取Cookie保存到变量" class="headerlink" title="获取Cookie保存到变量"></a>获取Cookie保存到变量</h4><p>首先，我们先利用CookieJar对象实现获取cookie的功能，存储到变量中</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> urllib.request</div><div class="line"><span class="keyword">import</span> http.cookiejar</div><div class="line"></div><div class="line"><span class="comment"># python3的http.cookiejar相对于python2是cookielib</span></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># 声明一个CookieJar对象实例来保存cookie</span></div><div class="line">    cookie = http.cookiejar.CookieJar()</div><div class="line">    <span class="comment"># 利用HTTPCookieProcessor对象来创建cookie处理器</span></div><div class="line">    handler = urllib.request.HTTPCookieProcessor(cookie)</div><div class="line">    <span class="comment"># 通过handler来构建opener</span></div><div class="line">    opener = urllib.request.build_opener(handler)</div><div class="line">    response = opener.open(<span class="string">"http://www.baidu.com"</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> cookie:</div><div class="line">        print(<span class="string">'name = '</span> + item.name)</div><div class="line">        print(<span class="string">'value = '</span> + item.value)</div><div class="line"><span class="string">'''</span></div><div class="line">打印的结果</div><div class="line">name = BAIDUID</div><div class="line">value = D604445C0C028E8ABE4264EC0CBD7E1D:FG=1</div><div class="line">name = BIDUPSID</div><div class="line">value = D604445C0C028E8ABE4264EC0CBD7E1D</div><div class="line">name = H_PS_PSSID</div><div class="line">value = 1466_21089_22159</div><div class="line">name = PSTM</div><div class="line">value = 1504509252</div><div class="line">name = BDSVRTM</div><div class="line">value = 0</div><div class="line">name = BD_HOME</div><div class="line">value = 0</div><div class="line"></div><div class="line">'''</div><div class="line"><span class="string">'''</span></div><div class="line">基于python2的代码</div><div class="line">import urllib2</div><div class="line">import cookielib</div><div class="line">cookie = cookielib.CookieJar()</div><div class="line">#利用urllib2库的HTTPCookieProcessor对象来创建cookie处理器</div><div class="line">handler=urllib2.HTTPCookieProcessor(cookie)</div><div class="line">#通过handler来构建opener</div><div class="line">opener = urllib2.build_opener(handler)</div><div class="line">#此处的open方法同urllib2的urlopen方法，也可以传入request</div><div class="line">response = opener.open('http://www.baidu.com')</div><div class="line">for item in cookie:</div><div class="line">    print 'Name = '+item.name</div><div class="line">    print 'Value = '+item.value</div><div class="line">    '''</div></pre></td></tr></table></figure>
-<h4 id="保存Cookie到文件"><a href="#保存Cookie到文件" class="headerlink" title="保存Cookie到文件"></a>保存Cookie到文件</h4><p>在上面的方法中，我们将cookie保存到了cookie这个变量中，如果我们想将cookie保存到文件中该怎么做呢？这时，我们就要用到</p>
-<p>FileCookieJar这个对象了，在这里我们使用它的子类MozillaCookieJar来实现Cookie的保存。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> urllib.request</div><div class="line"><span class="keyword">import</span> http.cookiejar</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># 设置保存cookie的文件，同级目录下的cookie.txt</span></div><div class="line">    filename = <span class="string">'cookie.txt'</span></div><div class="line">    <span class="comment"># 声明一个MozillaCookieJar对象实例来保存cookie，之后写入文件</span></div><div class="line">    cookie = http.cookiejar.MozillaCookieJar(filename)</div><div class="line">    handler = urllib.request.HTTPCookieProcessor(cookie)</div><div class="line">    opener = urllib.request.build_opener(handler)</div><div class="line">    response = opener.open(<span class="string">"http://www.baidu.com"</span>)</div><div class="line">    <span class="comment"># 保存cookie到文件</span></div><div class="line">    cookie.save(ignore_discard=<span class="keyword">True</span>, ignore_expires=<span class="keyword">True</span>)</div><div class="line">    <span class="string">'''</span></div><div class="line">    ignore_discard: save even cookies set to be discarded.(即使cookies将被丢弃也将它保留下来)</div><div class="line">    ignore_expires: save even cookies that have expired the file is overwritten if it already exists (若cookies已经存在，就覆盖原文件写入)</div><div class="line">    '''</div><div class="line">    </div><div class="line">    <span class="string">'''</span></div><div class="line">    cookie.txt的内容</div><div class="line">    # Netscape HTTP Cookie File</div><div class="line">    # http://curl.haxx.se/rfc/cookie_spec.html</div><div class="line">    # This is a generated file!  Do not edit.</div><div class="line"></div><div class="line">    .baidu.com	TRUE	/	FALSE	3651994080	BAIDUID	5CEA0A924FE72079A5C5E4F66704297F:FG=1</div><div class="line">    .baidu.com	TRUE	/	FALSE	3651994080	BIDUPSID	5CEA0A924FE72079A5C5E4F66704297F</div><div class="line">    .baidu.com	TRUE	/	FALSE		H_PS_PSSID	1458_21105_18560_20927</div><div class="line">    .baidu.com	TRUE	/	FALSE	3651994080	PSTM	1504510433</div><div class="line">    www.baidu.com	FALSE	/	FALSE		BDSVRTM	0</div><div class="line">    www.baidu.com	FALSE	/	FALSE		BD_HOME	0</div><div class="line">    '''</div></pre></td></tr></table></figure>
-<h4 id="从文件中获取Cookie并访问"><a href="#从文件中获取Cookie并访问" class="headerlink" title="从文件中获取Cookie并访问"></a>从文件中获取Cookie并访问</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">usecookie</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># 创建MozillaCookieJar实例对象</span></div><div class="line">    newcookie = http.cookiejar.MozillaCookieJar()</div><div class="line">    <span class="comment"># 从文件中读取cookie内容到变量</span></div><div class="line">    newcookie.load(<span class="string">'cookie.txt'</span>, ignore_expires=<span class="keyword">True</span>, ignore_discard=<span class="keyword">True</span>)</div><div class="line">    <span class="comment"># 创建请求的request</span></div><div class="line">    req = urllib.request.Request(<span class="string">"http://www.baidu.com"</span>)</div><div class="line">    <span class="comment"># 利用build_opener创建一个opener</span></div><div class="line">    newopener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(newcookie))</div><div class="line">    resp = newopener.open(req)</div><div class="line">    print(resp.read())</div></pre></td></tr></table></figure>
-<h4 id="利用cookie模拟登录豆瓣"><a href="#利用cookie模拟登录豆瓣" class="headerlink" title="利用cookie模拟登录豆瓣"></a>利用cookie模拟登录豆瓣</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">filename = <span class="string">'cookie.txt'</span></div><div class="line"><span class="comment"># disable SSL verification, since it is default in python 2.7.9</span></div><div class="line">ssl._create_default_https_context = ssl._create_unverified_context</div><div class="line"><span class="comment"># 声明一个MozillaCookieJar对象实例来保存cookie，之后写入文件</span></div><div class="line">cookie = http.cookiejar.MozillaCookieJar(filename)</div><div class="line">handler = urllib.request.HTTPCookieProcessor(cookie)</div><div class="line">opener = urllib.request.build_opener(handler)</div><div class="line"><span class="string">''' 数据编码，否则报错</span></div><div class="line">TypeError: POST data should be bytes, an iterable of bytes, or a file object. It cannot be of type str.</div><div class="line">'''</div><div class="line">data = urllib.parse.urlencode(&#123;</div><div class="line">    <span class="string">'form_email'</span>: <span class="string">'18883325578'</span>,</div><div class="line">    <span class="string">'form_password'</span>: <span class="string">'我的密码'</span></div><div class="line">&#125;).encode()</div><div class="line">url = <span class="string">"https://accounts.douban.com/login"</span></div><div class="line">response = opener.open(url, data)</div><div class="line"><span class="comment"># 保存cookie到文件</span></div><div class="line">cookie.save(ignore_discard=<span class="keyword">True</span>, ignore_expires=<span class="keyword">True</span>)</div><div class="line">result = opener.open(<span class="string">"http://www.douban.com"</span>)</div><div class="line">soup = BeautifulSoup(result.read())</div><div class="line">print(soup)</div></pre></td></tr></table></figure>
-<p><strong>要点:</strong></p>
-<ol>
-<li>Python 2.7.9 之后版本引入了一个新特性，当你urllib.urlopen一个 https 的时候会验证一次 SSL 证书,当目标使用的是自签名的证书时就会爆出一个urllib.URLError: <urlopen error="" [ssl:="" certificate_verify_failed]="" certificate="" verify="" failed="" (_ssl.c:581)=""> 的错误消息</urlopen></li>
-</ol>
-
       
     </div>
     <footer class="entry-meta entry-footer">
@@ -272,7 +199,7 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
 
           
             <div class="entry-thumbnail">
-              <a href="/2017/08/11/About-Yield/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/2" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+              <a href="/2017/08/11/About-Yield/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/10" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
             </div>
             <div class="entry-summary">
             写python遇到yield不是很懂。。。网上搜罗了一番
@@ -335,7 +262,7 @@ yield是一个表达式，是有返回值的，如果说函数中含有yield时�
 
           
             <div class="entry-thumbnail">
-              <a href="/2017/08/10/关于threading/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/5" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+              <a href="/2017/08/10/关于threading/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/4" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
             </div>
             <div class="entry-summary">
             threading模块包含的方法python中的threading模块包含了一下的一些方法：
@@ -408,6 +335,64 @@ Beautiful Soup是一个可以从HTML或XML文件中提取数据的Python库，�
             <a href="/2017/08/09/Beautiful-Soup/#more">阅读全文</a>
           </p>
         </div>
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-someproblemsimet"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/06/someproblemsimet/">someproblemsimet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/08/06/someproblemsimet/" class="article-date">
+	  <time datetime="2017-08-06T10:29:02.000Z" itemprop="datePublished">八月 6, 2017</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>python 解决NAMEError：name ‘reload’ is not defined的问题</p>
+<ul>
+<li><p>对于python 2.x:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>对于python&lt;=3.3:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> imp</div><div class="line">imp.reload(sys)</div><div class="line"><span class="string">'''</span></div><div class="line">python3与python 2有很大的区别，python3系统默认使用的是UTF-8编码，所以，对于使用的是python3的情况不需要使用sys.setdefaultencoding('utf-8')这段代码，并且python3中已经没有setdefaultencoding这个函数了</div><div class="line"> '''</div></pre></td></tr></table></figure>
+</li>
+<li><p>对于python&gt;=3.4:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> importlib</div><div class="line">importlib.reload(sys)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在python3中已经没有StringIO模块，修改为io模块</p>
+</li>
+</ol>
+
       
     </div>
     <footer class="entry-meta entry-footer">
@@ -536,18 +521,6 @@ Beautiful Soup是一个可以从HTML或XML文件中提取数据的Python库，�
               <div class="widget-entry-summary" style="margin: 0;">
             
 
-              <h6 style="margin: 0;"><a href="/2017/09/02/pythonbasic/">cookie的用法</a></h6>
-              <span>九月 2, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
               <h6 style="margin: 0;"><a href="/2017/08/11/About-Yield/">About Yield</a></h6>
               <span>八月 11, 2017</span>
             </div>
@@ -590,6 +563,18 @@ Beautiful Soup是一个可以从HTML或XML文件中提取数据的Python库，�
 
           </li>
         
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/07/31/About-urllib2/">About urllib2</a></h6>
+              <span>七月 31, 2017</span>
+            </div>
+
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -609,7 +594,7 @@ Beautiful Soup是一个可以从HTML或XML文件中提取数据的Python库，�
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -629,7 +614,7 @@ Beautiful Soup是一个可以从HTML或XML文件中提取数据的Python库，�
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

@@ -112,64 +112,6 @@ var themeMenus = {};
         
           <section id="main">
   
-    <article id="post-someproblemsimet"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/06/someproblemsimet/">someproblemsimet</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/08/06/someproblemsimet/" class="article-date">
-	  <time datetime="2017-08-06T10:29:02.000Z" itemprop="datePublished">八月 6, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <ol>
-<li><p>python 解决NAMEError：name ‘reload’ is not defined的问题</p>
-<ul>
-<li><p>对于python 2.x:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</div></pre></td></tr></table></figure>
-</li>
-<li><p>对于python&lt;=3.3:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> imp</div><div class="line">imp.reload(sys)</div><div class="line"><span class="string">'''</span></div><div class="line">python3与python 2有很大的区别，python3系统默认使用的是UTF-8编码，所以，对于使用的是python3的情况不需要使用sys.setdefaultencoding('utf-8')这段代码，并且python3中已经没有setdefaultencoding这个函数了</div><div class="line"> '''</div></pre></td></tr></table></figure>
-</li>
-<li><p>对于python&gt;=3.4:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> importlib</div><div class="line">importlib.reload(sys)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>在python3中已经没有StringIO模块，修改为io模块</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
     <article id="post-About-urllib2"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -379,18 +321,6 @@ var themeMenus = {};
               <div class="widget-entry-summary" style="margin: 0;">
             
 
-              <h6 style="margin: 0;"><a href="/2017/09/02/pythonbasic/">cookie的用法</a></h6>
-              <span>九月 2, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
               <h6 style="margin: 0;"><a href="/2017/08/11/About-Yield/">About Yield</a></h6>
               <span>八月 11, 2017</span>
             </div>
@@ -433,6 +363,18 @@ var themeMenus = {};
 
           </li>
         
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/07/31/About-urllib2/">About urllib2</a></h6>
+              <span>七月 31, 2017</span>
+            </div>
+
+          </li>
+        
       </ul>
     </div>
   </div>
@@ -452,7 +394,7 @@ var themeMenus = {};
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -472,7 +414,7 @@ var themeMenus = {};
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
