@@ -11,18 +11,18 @@
   
   
   
-  <meta name="description" content="python cookie的使用（来自http://cuiqingcai.com/968.html ，基于python2） 当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeou">
+  <meta name="description" content="（来自http://cuiqingcai.com/968.html ，基于python2） 当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeout。 如果我们需要用到Cooki">
 <meta name="keywords" content="cookie">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python中cookie的用法">
 <meta property="og:url" content="http://yoursite.com/2017/09/04/python中cookie的用法/index.html">
 <meta property="og:site_name" content="Su&#39;s Blog">
-<meta property="og:description" content="python cookie的使用（来自http://cuiqingcai.com/968.html ，基于python2） 当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeou">
+<meta property="og:description" content="（来自http://cuiqingcai.com/968.html ，基于python2） 当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeout。 如果我们需要用到Cooki">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-09-04T09:11:22.000Z">
+<meta property="og:updated_time" content="2017-09-04T09:13:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python中cookie的用法">
-<meta name="twitter:description" content="python cookie的使用（来自http://cuiqingcai.com/968.html ，基于python2） 当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeou">
+<meta name="twitter:description" content="（来自http://cuiqingcai.com/968.html ，基于python2） 当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeout。 如果我们需要用到Cooki">
   
     <link rel="alternate" href="/atom.xml" title="Su&#39;s Blog" type="application/atom+xml">
   
@@ -110,6 +110,24 @@ var themeMenus = {};
 </header>
 
 
+  <div style="background: #fff; width: 100%;">
+
+      <div style="max-height:600px; overflow: hidden;  display: flex; display: -webkit-flex; align-items: center;">
+        <img id="originBg" width="100%" alt="" src="">
+      </div>
+
+  </div>
+
+  <script>
+      var imgUrls = "css/images/pose.jpg,https://source.unsplash.com/collection/954550/1920x1080".split(",");
+      var random = Math.floor((Math.random() * imgUrls.length ));
+      if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+        document.getElementById("originBg").src=imgUrls[random];
+      } else {
+        document.getElementById("originBg").src='/' + imgUrls[random];
+      }
+  </script>
+
 
 
   <div id="container">
@@ -145,10 +163,10 @@ var themeMenus = {};
     </div>
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="python-cookie的使用"><a href="#python-cookie的使用" class="headerlink" title="python cookie的使用"></a>python cookie的使用</h4><p>（来自<a href="http://cuiqingcai.com/968.html" target="_blank" rel="external">http://cuiqingcai.com/968.html</a> ，基于python2）</p>
+        <p>（来自<a href="http://cuiqingcai.com/968.html" target="_blank" rel="external">http://cuiqingcai.com/968.html</a> ，基于python2）</p>
 <p>当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeout。</p>
 <p>如果我们需要用到Cookie，只用这个opener是不能达到目的的，所以我们需要创建更一般的opener来实现对Cookie的设置。</p>
-<p>&lt;!— more —&gt;</p>
+<a id="more"></a>
 <p>cookielib模块的主要作用是提供可存储cookie的对象，以便于与urllib2模块配合使用来访问Internet资源。Cookielib模块非常强大，我们可以利用本模块的CookieJar类的对象来捕获cookie并在后续连接请求时重新发送，比如可以实现模拟登录功能。该模块主要的对象有CookieJar、FileCookieJar、MozillaCookieJar、LWPCookieJar。</p>
 <p>它们的关系：CookieJar —-派生—-&gt;FileCookieJar  —-派生—–&gt;MozillaCookieJar和LWPCookieJar</p>
 <p>对于python3.4 cookie结构图:</p>
@@ -233,7 +251,7 @@ var themeMenus = {};
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     
-      <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#python-cookie的使用"><span class="nav-number">1.</span> <span class="nav-text">python cookie的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取Cookie保存到变量"><span class="nav-number">2.</span> <span class="nav-text">获取Cookie保存到变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保存Cookie到文件"><span class="nav-number">3.</span> <span class="nav-text">保存Cookie到文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从文件中获取Cookie并访问"><span class="nav-number">4.</span> <span class="nav-text">从文件中获取Cookie并访问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用cookie模拟登录豆瓣"><span class="nav-number">5.</span> <span class="nav-text">利用cookie模拟登录豆瓣</span></a></li></ol>
+      <ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取Cookie保存到变量"><span class="nav-number">1.</span> <span class="nav-text">获取Cookie保存到变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#保存Cookie到文件"><span class="nav-number">2.</span> <span class="nav-text">保存Cookie到文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#从文件中获取Cookie并访问"><span class="nav-number">3.</span> <span class="nav-text">从文件中获取Cookie并访问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用cookie模拟登录豆瓣"><span class="nav-number">4.</span> <span class="nav-text">利用cookie模拟登录豆瓣</span></a></li></ol>
     
     </div>
   </aside>
