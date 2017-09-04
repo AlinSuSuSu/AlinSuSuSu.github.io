@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>cookies详解 | Su&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="cookie" />
+  
+  
+  
+  
+  <meta name="description" content="(来自 http://blog.csdn.net/u012175089/article/details/70054806) HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题之一是如何管理状态。服务器端没有办法知道两个请求是否来自于同一个浏览器。那时的办法是在请求的页面中插入一个token，并且在下一次请求中将这个token返回（至服务器）。这就需要在form中插入">
+<meta name="keywords" content="cookie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cookies详解">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/cookies详解/index.html">
+<meta property="og:site_name" content="Su&#39;s Blog">
+<meta property="og:description" content="(来自 http://blog.csdn.net/u012175089/article/details/70054806) HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题之一是如何管理状态。服务器端没有办法知道两个请求是否来自于同一个浏览器。那时的办法是在请求的页面中插入一个token，并且在下一次请求中将这个token返回（至服务器）。这就需要在form中插入">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-09-04T06:45:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cookies详解">
+<meta name="twitter:description" content="(来自 http://blog.csdn.net/u012175089/article/details/70054806) HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题之一是如何管理状态。服务器端没有办法知道两个请求是否来自于同一个浏览器。那时的办法是在请求的页面中插入一个token，并且在下一次请求中将这个token返回（至服务器）。这就需要在form中插入">
+  
+    <link rel="alternate" href="/atom.xml" title="Su&#39;s Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+  
+
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/"] = "首页"; 
+
+  themeMenus["/archives"] = "归档"; 
+
+  themeMenus["/categories"] = "分类"; 
+
+  themeMenus["/tags"] = "标签"; 
+
+  themeMenus["/about"] = "关于"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Su&#39;s Blog" rel="home"> Su&#39;s Blog </a>
+            
+          </h1>
+
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-cookies详解" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      cookies详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/09/04/cookies详解/" class="article-date">
+	  <time datetime="2017-09-04T06:40:47.000Z" itemprop="datePublished">九月 4, 2017</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(来自 <a href="http://blog.csdn.net/u012175089/article/details/70054806" target="_blank" rel="external">http://blog.csdn.net/u012175089/article/details/70054806</a>)</p>
+<p>HTTP cookies，通常又称作”cookies”<br>早期Web开发面临的最大问题之一是如何管理状态。服务器端没有办法知道两个请求是否来自于同一个浏览器。那时的办法是在请求的页面中插入一个token，并且在下一次请求中将这个token返回（至服务器）。这就需要在form中插入一个包含token的隐藏表单域，或着在URL的qurey字符串中传递该token。这两种办法都强调手工操作并且极易出错。<br>cookies工作原理的基本信息在RFC2109中被规范化。</p>
+<a id="more"></a>
+<p><strong>cookie是什么？</strong><br>一个cookie就是存储在用户主机浏览器中的一小段文本文件。<br>Cookies是纯文本形式，它们不包含任何可执行代码。<br>一个Web页面或服务器告之浏览器来将这些信息存储并且基于一系列规则在之后的每个请求中都将该信息返回至服务器。Web服务器之后可以利用这些信息来标识用户。</p>
+<p>–</p>
+<p>通过HTTP的Set-Cookie消息头，Web服务器可以指定存储一个cookie。<br>Set-Cookie消息的格式如下面的字符串（中括号中的部分都是可选的）<br>Set-Cookie:value [ ;expires=date][ ;domain=domain][ ;path=path][ ;secure]<br>value部分，通常是一个name=value格式的字符串。事实上有很多浏览器用自己的格式，有细微的不同。<br>当一个cookie存在，并且可选条件允许的话，该cookie的值会在接下来的每个请求中被发送至服务器。</p>
+<p>cookie的值被存储在名为Cookie的HTTP消息头中，并且只包含了cookie的值，其它的选项全部被去除。<br>可选项只是存在于浏览器端，并不需要发给服务端。<br>例如： Cookie : value<br>如果在指定的请求中有多个cookies，那么它们会被分号和空格分开，例如：<br>Cookie:value1 ; value2 ; name1=value1</p>
+<p><strong>有效期选项（The expires  option）</strong><br>指定了cookie过期的时间，过期后可能会被浏览器删掉。<br>格式为Wdy,DD-Mon–YYYY HH:MM:SS GMT，例如：<br>Set-Cookie:name=Nicholas;expires=Sat, 02 May 2009 23:38:25 GMT<br>在没有expires选项时，cookie的寿命仅限于单一的会话中。浏览器的关闭意味这一次会话的结束，所以会话cookie只存在于浏览器保持打开的状态之下。</p>
+<p><strong>domain选项（The domain option）</strong><br>指示cookie将要发送到哪个域或那些域中。默认情况下，domain会被设置为创建该cookie的页面所在的域名。<br>domain选项被用来扩展cookie值所要发送域的数量。例如:<br>Set-Cookie:name=Nicholas;domain=www.baidu.com<br>很多时候大网站存在二级域名，例如fanyi.baidu.com。cookies可能只发给对应的二级域名。</p>
+<p><strong>Path选项（The path option）</strong><br>在请求相匹配的路径的时候，才会发送cookie<br>例如：<br>Set-Cookie:name=Nicholas;path=/blog<br>在这个例子中，path选项值会与/blog,/blogrool等等相匹配；任何以/blog开头的选项都是合法的。</p>
+<p><strong>secure选项（The secure option）</strong><br>该选项只是一个标记并且没有其它的值。只有当请求是通过SSL和HTTPS创建时，才会发送。<br>这种cookie的内容意指具有很高的价值并且可能潜在的被破解以纯文本形式传输。例如<br>Set-Cookie:name=Nicholas;secure<br>现实中，机密且敏感的信息绝不应该在cookies中存储或传输，因为cookies的整个机制都是原本不安全的。<br>默认情况下，在HTTPS链接上传输的cookies都会被自动添加上secure选项。</p>
+<p><strong>cookie的维护和生命周期（cookie maintenance and lifecycle）</strong><br>任意数量的选项都可以在单一的cookie中指定，并且这些选项可以以任何顺序存在，例如<br>Set-Cookie:name=Nicholas; domain=nczonline.net; path=/blog<br>这个cooke有四个标识符：cookie的name，domain，path，secure标记。<br>要想在将来改变这个cookie的值，需要发送另一个具有相同cookie name,domain,path的Set-Cookie消息头。<br>例如：<br>Set-Cooke:name=Greg; domain=nczonline.net; path=/blog<br>这将以一个新的值来覆盖原来cookie的值。<br>然而，仅仅只是改变这些选项的某一个也会创建一个完全不同的cookie，<br>例如：<br>Set-Cookie:name=Nicholas; domain=nczonline.net; path=/<br>在返回这个消息头后，会存在两个同时拥有“name”的不同的cookie。<br>如果你访问在www.nczonline.NET/blog下的一个页面，以下的消息头将被包含进来：<br>Cookie：name=Greg;name=Nicholas<br>在这个消息头中存在了两个名为“name”的cookie，path值越详细则cookie越靠前。domain-path越详细则cookie字符串越靠前。假设我在ww.nczonline.Net/blog下并且发送了另一个cookie，其设置如下：<br>Set-Cookie:name=Mike<br>那么返回的消息头现在则变为：<br>Cookie：name=Mike;name=Greg;name=Nicholas<br>由于包含“Mike”的cookie使用了域名（www.nczonline.net）作为其domain值并且以全路径（/blog）作为其path值，则它较其它两个cookie更加详细。</p>
+<p><strong>使用失效日期（using expiration dates）</strong><br>当cookie创建时包含了失效日期，这个失效日期则关联了以name-domain-path-secure为标识的cookie。<br>要改变一个cookie的失效日期，必须指定同样的组合。当改变一个cookie的值时，你不必每次都设置失效日期，因为它不是cookie标识信息的组成部分。<br>例如：<br>Set-Cookie:name=Mike;expires=Sat,03 May 2025 17:44:22 GMT<br>现在已经设置了cookie的失效日期，所以下次我想要改变cookie的值时，我只需要使用它的名字：<br>Set-Cookie:name=Matt<br>在cookie上的失效日期并没有改变，因为cookie的标识符是相同的。实际上，只有你手工的改变cookie的失效日期，否则其失效日期不会改变。这意味着在同一个会话中，一个会话cookie可以变成一个持久化cookie（一个可以在多个会话中存在的），反之则不可。为了要将一个持久化cookie变为一个会话cookie，你必须删除这个持久化cookie，这只要设置它的失效日期为过去某个时间之后再创建一个同名的会话cookie就可以实现。<br>需要记得的是失效日期是以浏览器运行的电脑上的系统时间为基准进行核实的。没有任何办法来来验证这个系统时间是否和服务器的时间同步，所以当服务器时间和浏览器所处系统时间存在差异时这样的设置会出现错误。</p>
+<p><strong>cookie自动删除（automatic cookie removal）</strong><br>cookie会被浏览器自动删除，通常存在以下几种原因：<br>会话cooke(Session cookie)在会话结束时（浏览器关闭）会被删除<br>持久化cookie（Persistent cookie）在到达失效日期时会被删除<br>如果浏览器中的cookie限制到达，那么cookies会被删除以为新建cookies创建空间。<br>对于任何这些自动删除来说，Cookie管理显得十分重要，因为这些删除都是无意识的。</p>
+<p><strong>Cookie限制条件（Cookie restrictions）</strong><br>在cookies上存在了诸多限制条件，来阻止cookie滥用并保护浏览器和服务器免受一些负面影响。<br>有两种cookies的限制条件：cookies的属性和cookies的总大小。<br>原始的规范中限定每个域名下不超过20个cookies，早期的浏览器都遵循该规范，并且在IE7中有个更近一步的提升。<br>在微软的一次更新中，他们在IE7中增加cookies的限制到50个，与此同时Opera限定cookies个数为30.Safari和Chrome对与每个域名下的cookies个数没有限制。<br>发向服务器的所有cookies的最大数量（空间）仍旧维持原始规范中所指出的：4KB。<br>所有超出该限制的cookies都会被截掉并且不会发送至服务器。<br>Subcookies<br>鉴于cookie的数量限制，开发者提出的subcookies的观点来增加cookies的存储量。<br>Subcookies是一些存储在一个cookie的value中的一些name-value对，并且通常与以下格式类似：<br>name=a=b&amp;c=d&amp;e=f&amp;g=h<br>这种方式允许在单个cookie中保存多个name-value对，而不会超过浏览器cookie的数量限制。<br>通过这种方式创建cookies的负面影响是，需要自定义解析方式来提取这些值，相比较而言cookies的格式会更为简单。服务器端框架已开始支持subcookies的存储。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cookie/">cookie</a></li></ul>
+
+      
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/02/pythonbasic/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">pythonbasic</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav">无</ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2017 Su&#39;s Blog All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
