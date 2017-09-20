@@ -112,6 +112,120 @@ var themeMenus = {};
         
           <section id="main">
   
+    <article id="post-python2-x和python3-x"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/09/20/python2-x和python3-x/">python2.x和python3.x</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/09/20/python2-x和python3-x/" class="article-date">
+	  <time datetime="2017-09-20T09:06:27.000Z" itemprop="datePublished">九月 20, 2017</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li>python 2.x MySQLdb在python3.x中用PyMySQL代替</li>
+<li><p>python 解决NAMEError：name ‘reload’ is not defined的问题</p>
+<ul>
+<li><p>对于python 2.x:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>对于python&lt;=3.3:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> imp</div><div class="line">imp.reload(sys)</div><div class="line"><span class="string">'''</span></div><div class="line">python3与python 2有很大的区别，python3系统默认使用的是UTF-8编码，所以，对于使用的是python3的情况不需要使用sys.setdefaultencoding('utf-8')这段代码，并且python3中已经没有setdefaultencoding这个函数了</div><div class="line"> '''</div></pre></td></tr></table></figure>
+</li>
+<li><p>对于python&gt;=3.4:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> importlib</div><div class="line">importlib.reload(sys)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在python3中已经没有StringIO模块，修改为io模块%</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/study/">study</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
+
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-梦幻花-东野圭吾"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/09/20/梦幻花-东野圭吾/">梦幻花--东野圭吾</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/09/20/梦幻花-东野圭吾/" class="article-date">
+	  <time datetime="2017-09-20T08:43:35.000Z" itemprop="datePublished">九月 20, 2017</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上周末（9月17日）头昏脑涨，又无事可做，便用kindle看起书来。说实话，kindle买来那么久并没有用过几次，终于理解为什么那么多人买了之后没过多久又转手了。</p>
+<p>理论的书看起来更增添反感，故而选了东野圭吾的书，推理小说总是能勾起人的兴趣来的。他的书看过几本，但大体都忘记名字，剧情也是只有一点记忆，都是看书过于浮躁的缘故，走马观花不经大脑。。。所以此次便想记它一记，增加印象。</p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/课外读物/">课外读物</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小说-推理/">小说, 推理</a></li></ul>
+
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-正则表达式"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -140,7 +254,7 @@ var themeMenus = {};
 
           
             <div class="entry-thumbnail">
-              <a href="/2017/09/04/正则表达式/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/2" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+              <a href="/2017/09/04/正则表达式/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/9" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
             </div>
             <div class="entry-summary">
             （整理自http://cuiqingcai.com/977.html ）
@@ -259,7 +373,7 @@ var themeMenus = {};
 
           
             <div class="entry-thumbnail">
-              <a href="/2017/09/04/cookies详解/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/8" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
+              <a href="/2017/09/04/cookies详解/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/5" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
             </div>
             <div class="entry-summary">
             (来自 http://blog.csdn.net/u012175089/article/details/70054806)
@@ -278,130 +392,6 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
       
   <span class="ico-tags"></span>
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cookie/">cookie</a></li></ul>
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-About-Yield"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/11/About-Yield/">About Yield</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/08/11/About-Yield/" class="article-date">
-	  <time datetime="2017-08-11T06:32:42.000Z" itemprop="datePublished">八月 11, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-thumbnail">
-              <a href="/2017/08/11/About-Yield/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/7" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
-            </div>
-            <div class="entry-summary">
-            写python遇到yield不是很懂。。。网上搜罗了一番
-yield在python中作为生成器理解，主要用处是可以迭代，简化了很多运算模型。
-yield是一个表达式，是有返回值的，如果说函数中含有yield时，它将不再是一个普通的函数，而是一个生成器，当该函数被调用时，不会自动执行，而是暂停。工作原理就是通过重复调用next()方法，直到捕获异常。yield 是一个类似 return 的关键...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2017/08/11/About-Yield/#more">阅读全文</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/study/">study</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-关于threading"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/10/关于threading/">关于threading</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/08/10/关于threading/" class="article-date">
-	  <time datetime="2017-08-10T08:38:30.000Z" itemprop="datePublished">八月 10, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-thumbnail">
-              <a href="/2017/08/10/关于threading/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/5" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
-            </div>
-            <div class="entry-summary">
-            threading模块包含的方法python中的threading模块包含了一下的一些方法：
-
-threading.acitve_count()返回正在运行的线程对象的个数，返回的个数和enumerate()方法返回的线程列表长度一致。
-threading.current_thread()返回当前线程对象。如果调用者的控制线程不是通过threading模块创建的，将会返回被限制功能的虚拟线程...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2017/08/10/关于threading/#more">阅读全文</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
       
 
@@ -514,6 +504,30 @@ threading.current_thread()返回当前线程对象。如果调用者的控制线
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2017/09/20/python2-x和python3-x/">python2.x和python3.x</a></h6>
+              <span>九月 20, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/09/20/梦幻花-东野圭吾/">梦幻花--东野圭吾</a></h6>
+              <span>九月 20, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2017/09/04/正则表达式/">正则表达式</a></h6>
               <span>九月 4, 2017</span>
             </div>
@@ -556,30 +570,6 @@ threading.current_thread()返回当前线程对象。如果调用者的控制线
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/08/10/关于threading/">关于threading</a></h6>
-              <span>八月 10, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/08/09/Beautiful-Soup/">Beautiful Soup</a></h6>
-              <span>八月 9, 2017</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -589,7 +579,7 @@ threading.current_thread()返回当前线程对象。如果调用者的控制线
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/课外读物/">课外读物</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -599,7 +589,7 @@ threading.current_thread()返回当前线程对象。如果调用者的控制线
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说-推理/">小说, 推理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -609,7 +599,7 @@ threading.current_thread()返回当前线程对象。如果调用者的控制线
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a>
+      <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/cookie/" style="font-size: 20px;">cookie</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/小说-推理/" style="font-size: 10px;">小说, 推理</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a>
     </div>
   </div>
 
@@ -619,7 +609,7 @@ threading.current_thread()返回当前线程对象。如果调用者的控制线
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
