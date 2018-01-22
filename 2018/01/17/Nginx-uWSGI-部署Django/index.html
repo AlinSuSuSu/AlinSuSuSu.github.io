@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>nginx + uwsgi 部署django | Su&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Python" />
+  
+  
+  
+  
+  <meta name="description" content="Linux下python环境搭建。  查看系统所有版本信息：   查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https://">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx + uWSGI 部署Django">
+<meta property="og:url" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django/index.html">
+<meta property="og:site_name" content="Su&#39;s Blog">
+<meta property="og:description" content="Linux下python环境搭建。  查看系统所有版本信息：   查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https://">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/C39916A0-3049-4C5D-A84F-DBE216A439DF.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/62EBA43A-8B4F-417D-93B3-D6934CCFE449.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/3C226119-3512-489A-885F-A1C9D30040CD.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/BD132D0F-CF16-47BE-BC97-F5E46E8BF45F.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/9d128cc2-5d92-40ab-a8fe-0895e02523de.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/4ed4f083-ff43-492f-8fcd-6b9bf2e2e867.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/f1ea3412-7e6d-4e3d-81fc-9de81b1673e1.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/b121a69b-92ed-4c6f-b553-d509473626ba.png">
+<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/ccc74c82-1b4d-4c43-b9ec-7f3712962c63.png">
+<meta property="og:updated_time" content="2018-01-22T06:33:31.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx + uWSGI 部署Django">
+<meta name="twitter:description" content="Linux下python环境搭建。  查看系统所有版本信息：   查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https://">
+<meta name="twitter:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/C39916A0-3049-4C5D-A84F-DBE216A439DF.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Su&#39;s Blog" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css" >
+  <link rel="stylesheet" href="/css/hiero.css" >
+  <link rel="stylesheet" href="/css/glyphs.css" >
+  
+
+</head>
+
+<script>
+var themeMenus = {};
+
+  themeMenus["/"] = "首页"; 
+
+  themeMenus["/archives"] = "归档"; 
+
+  themeMenus["/categories"] = "分类"; 
+
+  themeMenus["/tags"] = "标签"; 
+
+  themeMenus["/about"] = "关于"; 
+
+</script>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  <header id="allheader" class="site-header" role="banner">
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="Su&#39;s Blog" rel="home"> Su&#39;s Blog </a>
+            
+          </h1>
+
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+            <div class="clearfix sf-menu">
+
+              <ul id="main-nav" class="nmenu sf-js-enabled">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">首页</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">归档</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">分类</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">标签</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">关于</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+
+      </div>
+  </div>
+</header>
+
+
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-Nginx-uWSGI-部署Django" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Nginx + uWSGI 部署Django
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2018/01/17/Nginx-uWSGI-部署Django/" class="article-date">
+	  <time datetime="2018-01-17T12:34:06.000Z" itemprop="datePublished">一月 17, 2018</time>
+	</a>
+
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux下python环境搭建。</p>
+<ol>
+<li><p>查看系统所有版本信息：</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/C39916A0-3049-4C5D-A84F-DBE216A439DF.png" alt="C39916A0-3049-4C5D-A84F-DBE216A439DF"></p>
+</li>
+<li><p>查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。<br>2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel<br>2.1 下载 wget <a href="https://www.python.org/ftp/python/3.6.0/Python-3.6.0a1.tar.xz" target="_blank" rel="external">https://www.python.org/ftp/python/3.6.0/Python-3.6.0a1.tar.xz</a></p>
+<p>2.2 解压 　tar xvf  Python-3.6.0a1.tar.xz</p>
+<p>2.3 编译安装:</p>
+<p>​     2.3.1 进入目录./configure 配置。Configure是一个可执行脚本，它有很多选项，使用命令./configure –help输出详细的选项列表。常用的是 –prefix。比如打算把它安装到目录/usr/local/python3,于是在python3目录执行带选项的脚本./configure –prefix=/usr/local/python3执行成功后再编译、安装（make，make install）；安装完成将自动生成目录python6而且该软件所有的文件都被复制到这个目录。指定这个选项是为了以后的维护方便，如果没有用这个选项，安装过程结束后，该软件所需的软件被复制到不同的系统目录下，很难弄清楚到底复制了那些文件、都复制到哪里去了—基本上是一塌糊涂。当需要卸载软件或移植软件，只要删除这个目录就行</p>
+<p>​     2.3.2 make &amp;&amp; make install  编译（make）并安装（make install）</p>
+<p>​     如果编译遇到问题：<img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/62EBA43A-8B4F-417D-93B3-D6934CCFE449.png" alt="62EBA43A-8B4F-417D-93B3-D6934CCFE449"></p>
+</li>
+</ol>
+<p>   根据需要安装对应的模块</p>
+<p>   <img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/3C226119-3512-489A-885F-A1C9D30040CD.png" alt="3C226119-3512-489A-885F-A1C9D30040CD"></p>
+<p>   2.4 查看是否安装成功：python3 </p>
+<p>   <img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/BD132D0F-CF16-47BE-BC97-F5E46E8BF45F.png" alt="BD132D0F-CF16-47BE-BC97-F5E46E8BF45F"><br>   如果还是提示python3命令不存在，创建软链<br>   ln -s /usr/local/python3.6/bin/python3 /usr/bin/python3</p>
+<ol>
+<li><p>pip3 。一般python3源码会自带pip3，所以不需要另行安装。查看pip3的版本：python3 -m pip -V。之前不清楚python3自带pip3.所以自己安装了，</p>
+<p>pip下载：wget <a href="https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9" target="_blank" rel="external">https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9</a></p>
+<p>安装pip：</p>
+<p>tar -xzvf pip-1.5.4.tar.gz</p>
+<p>cd pip-1.5.4</p>
+<p>python <a href="http://setup.py" target="_blank" rel="external">setup.py</a> install</p>
+<p>用pip -V查看版本看到的是python2上的pip。我不确定以上命令是否能正确将pip装到python3上，或者可以尝试用python3 setup.py install</p>
+<p>升级pip:python3 -m pip install –upgrade pip</p>
+</li>
+<li><p>安装Django。系统如果同时有python2和python3.安装第三方包一般会默认用python2装，如果想用python3安装第三方包，使用python3 -m pip install packagename。可以参考官方文档：<a href="https://docs.python.org/3/installing/" target="_blank" rel="external">https://docs.python.org/3/installing/</a></p>
+<p>python3 -m pip install Django</p>
+<p>如果不在pip install 前加python3 -m会报错：AttributeError: module ‘importlib._bootstrap’ has no attribute ‘SourceFileLoader’</p>
+<p>或者是pip: command not found</p>
+</li>
+<li><p>安装虚拟环境。python3 -m pip install virtualenv 。</p>
+<p>5.1 查看路径，which virtualenv找到路径后创建虚拟环境：/usr/local/bin/virtualenv my_work (my_work是我的虚拟环境名称)</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/9d128cc2-5d92-40ab-a8fe-0895e02523de.png" alt="9d128cc2-5d92-40ab-a8fe-0895e02523de"></p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/4ed4f083-ff43-492f-8fcd-6b9bf2e2e867.png" alt="4ed4f083-ff43-492f-8fcd-6b9bf2e2e867"></p>
+<p>​</p>
+<p>5.2 进入虚拟环境目录/usr/local/bin/my_work，然后激活 source bin/activate</p>
+<p>5.3 进入my_work的bin目录，安装依赖包pip3 install -r requirements.txt(这个要写是django项目的requirements.txt的绝对路径)。</p>
+<p>安装成功后，如下所示：</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/f1ea3412-7e6d-4e3d-81fc-9de81b1673e1.png" alt="f1ea3412-7e6d-4e3d-81fc-9de81b1673e1"></p>
+<p>如果没有安装项目对应的扩展包，在运行项目的时候则会出现一下问题。</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/b121a69b-92ed-4c6f-b553-d509473626ba.png" alt="b121a69b-92ed-4c6f-b553-d509473626ba"></p>
+<p>如果使用完毕需要退出虚拟环境：deactivates</p>
+</li>
+<li><p>运行开发服务器测试，进入项目目录（/root/qunsu/proj/qa_cg），修改子目录qa_cg/settings.py文件中的ALLOWED_HOSTS = [],添加上部署的机器的ip。在虚拟环境下运行 python3 /home/tester/qunsu/qa_cg/manage.py runserver 0.0.0.0:8000。确保能正常打开网站。</p>
+<p>在运行的时候如果报错：</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/ccc74c82-1b4d-4c43-b9ec-7f3712962c63.png" alt="ccc74c82-1b4d-4c43-b9ec-7f3712962c63"></p>
+<p>找到报错的代码（base.py）。然后将if version &lt; (1, 3, 3):</p>
+<p>   raise ImproperlyConfigured(“mysqlclient 1.3.3 or newer is required; you have %s” % Database.<strong>version</strong>)注释掉。</p>
+</li>
+<li><p>安装nginx等软件，使用的机器的系统是centos。</p>
+<p>yum install epel-release</p>
+<p>yum install python-devel nginx</p>
+<p>没有安装supervisor。python3安装一直报错，貌似supervisor支持python2</p>
+<p>关闭防火墙，不确定不关闭有什么影响</p>
+<p>service iptables stop </p>
+</li>
+<li><p>安装uwsgi</p>
+<p>python3 -m pip install uwsgi —upgrade</p>
+</li>
+<li><p>使用uwsgi运行项目，两种方法：</p>
+<ol>
+<li><p>第一种：执行使用命令</p>
+<p><code>uwsgi --http :8002 --chdir ``/path/to/project</code> <code>--home=``/path/to/env</code> <code>--module project.wsgi</code></p>
+<p>如果端口已被占用，则<code>lsof</code> <code>-i :8002</code>找到对应的进程，kill掉。或者修改uwsgi的端口。</p>
+</li>
+<li><p>第二种：创建配置文件在项目下创建配置文件/root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini。</p>
+<p>文件内容：</p>
+<p><code>qa_cg_uwsgi.ini file</code></p>
+<p><code>[uwsgi]</code></p>
+<p><code>Django-related settings</code></p>
+<p><code>socket = :8002</code></p>
+<p><code>the base directory (full path)</code></p>
+<p><code>chdir           = /root/qunsu/proj/qa_cg</code></p>
+<p><code>Django s wsgi file</code></p>
+<p><code>module          = qa_cg.wsgi</code></p>
+<p><code>process-related settings</code></p>
+<p><code>master</code></p>
+<p><code>master          = true</code></p>
+<p><code>maximum number of worker processes</code></p>
+<p><code>processes       = 4</code></p>
+<p><code>... with appropriate permissions - may be needed</code></p>
+<p><code>chmod-socket    = 664</code></p>
+<p><code>clear environment on exit</code></p>
+<p><code>vacuum          = true</code></p>
+<p>运行uwsgi:uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
+</li>
+<li><p>关联nginx<br>在nginx.conf配置<br>location ~  ^/ {</p>
+<pre><code>include uwsgi_params;
+uwsgi_pass 192.168.233.108:8002;
+uwsgi_read_timeout 2;
+</code></pre><p>}</p>
+</li>
+</ol>
+</li>
+<li><p>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/study/">study</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+      
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/08/mac下同时装python2 和python3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+      <ol class="nav">无</ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+      <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2018 Su&#39;s Blog All Rights Reserved.
+          
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hiero" target="_blank">hiero</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var contentdiv = document.getElementById("content");
+
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+</script>
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/scripts.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

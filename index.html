@@ -112,6 +112,263 @@ var themeMenus = {};
         
           <section id="main">
   
+    <article id="post-Nginx-uWSGI-部署Django"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/01/17/Nginx-uWSGI-部署Django/">Nginx + uWSGI 部署Django</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2018/01/17/Nginx-uWSGI-部署Django/" class="article-date">
+	  <time datetime="2018-01-17T12:34:06.000Z" itemprop="datePublished">一月 17, 2018</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Linux下python环境搭建。</p>
+<ol>
+<li><p>查看系统所有版本信息：</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/C39916A0-3049-4C5D-A84F-DBE216A439DF.png" alt="C39916A0-3049-4C5D-A84F-DBE216A439DF"></p>
+</li>
+<li><p>查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。<br>2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel<br>2.1 下载 wget <a href="https://www.python.org/ftp/python/3.6.0/Python-3.6.0a1.tar.xz" target="_blank" rel="external">https://www.python.org/ftp/python/3.6.0/Python-3.6.0a1.tar.xz</a></p>
+<p>2.2 解压 　tar xvf  Python-3.6.0a1.tar.xz</p>
+<p>2.3 编译安装:</p>
+<p>​     2.3.1 进入目录./configure 配置。Configure是一个可执行脚本，它有很多选项，使用命令./configure –help输出详细的选项列表。常用的是 –prefix。比如打算把它安装到目录/usr/local/python3,于是在python3目录执行带选项的脚本./configure –prefix=/usr/local/python3执行成功后再编译、安装（make，make install）；安装完成将自动生成目录python6而且该软件所有的文件都被复制到这个目录。指定这个选项是为了以后的维护方便，如果没有用这个选项，安装过程结束后，该软件所需的软件被复制到不同的系统目录下，很难弄清楚到底复制了那些文件、都复制到哪里去了—基本上是一塌糊涂。当需要卸载软件或移植软件，只要删除这个目录就行</p>
+<p>​     2.3.2 make &amp;&amp; make install  编译（make）并安装（make install）</p>
+<p>​     如果编译遇到问题：<img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/62EBA43A-8B4F-417D-93B3-D6934CCFE449.png" alt="62EBA43A-8B4F-417D-93B3-D6934CCFE449"></p>
+</li>
+</ol>
+<p>   根据需要安装对应的模块</p>
+<p>   <img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/3C226119-3512-489A-885F-A1C9D30040CD.png" alt="3C226119-3512-489A-885F-A1C9D30040CD"></p>
+<p>   2.4 查看是否安装成功：python3 </p>
+<p>   <img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/BD132D0F-CF16-47BE-BC97-F5E46E8BF45F.png" alt="BD132D0F-CF16-47BE-BC97-F5E46E8BF45F"><br>   如果还是提示python3命令不存在，创建软链<br>   ln -s /usr/local/python3.6/bin/python3 /usr/bin/python3</p>
+<ol>
+<li><p>pip3 。一般python3源码会自带pip3，所以不需要另行安装。查看pip3的版本：python3 -m pip -V。之前不清楚python3自带pip3.所以自己安装了，</p>
+<p>pip下载：wget <a href="https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9" target="_blank" rel="external">https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9</a></p>
+<p>安装pip：</p>
+<p>tar -xzvf pip-1.5.4.tar.gz</p>
+<p>cd pip-1.5.4</p>
+<p>python <a href="http://setup.py" target="_blank" rel="external">setup.py</a> install</p>
+<p>用pip -V查看版本看到的是python2上的pip。我不确定以上命令是否能正确将pip装到python3上，或者可以尝试用python3 setup.py install</p>
+<p>升级pip:python3 -m pip install –upgrade pip</p>
+</li>
+<li><p>安装Django。系统如果同时有python2和python3.安装第三方包一般会默认用python2装，如果想用python3安装第三方包，使用python3 -m pip install packagename。可以参考官方文档：<a href="https://docs.python.org/3/installing/" target="_blank" rel="external">https://docs.python.org/3/installing/</a></p>
+<p>python3 -m pip install Django</p>
+<p>如果不在pip install 前加python3 -m会报错：AttributeError: module ‘importlib._bootstrap’ has no attribute ‘SourceFileLoader’</p>
+<p>或者是pip: command not found</p>
+</li>
+<li><p>安装虚拟环境。python3 -m pip install virtualenv 。</p>
+<p>5.1 查看路径，which virtualenv找到路径后创建虚拟环境：/usr/local/bin/virtualenv my_work (my_work是我的虚拟环境名称)</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/9d128cc2-5d92-40ab-a8fe-0895e02523de.png" alt="9d128cc2-5d92-40ab-a8fe-0895e02523de"></p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/4ed4f083-ff43-492f-8fcd-6b9bf2e2e867.png" alt="4ed4f083-ff43-492f-8fcd-6b9bf2e2e867"></p>
+<p>​</p>
+<p>5.2 进入虚拟环境目录/usr/local/bin/my_work，然后激活 source bin/activate</p>
+<p>5.3 进入my_work的bin目录，安装依赖包pip3 install -r requirements.txt(这个要写是django项目的requirements.txt的绝对路径)。</p>
+<p>安装成功后，如下所示：</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/f1ea3412-7e6d-4e3d-81fc-9de81b1673e1.png" alt="f1ea3412-7e6d-4e3d-81fc-9de81b1673e1"></p>
+<p>如果没有安装项目对应的扩展包，在运行项目的时候则会出现一下问题。</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/b121a69b-92ed-4c6f-b553-d509473626ba.png" alt="b121a69b-92ed-4c6f-b553-d509473626ba"></p>
+<p>如果使用完毕需要退出虚拟环境：deactivates</p>
+</li>
+<li><p>运行开发服务器测试，进入项目目录（/root/qunsu/proj/qa_cg），修改子目录qa_cg/settings.py文件中的ALLOWED_HOSTS = [],添加上部署的机器的ip。在虚拟环境下运行 python3 /home/tester/qunsu/qa_cg/manage.py runserver 0.0.0.0:8000。确保能正常打开网站。</p>
+<p>在运行的时候如果报错：</p>
+<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/ccc74c82-1b4d-4c43-b9ec-7f3712962c63.png" alt="ccc74c82-1b4d-4c43-b9ec-7f3712962c63"></p>
+<p>找到报错的代码（base.py）。然后将if version &lt; (1, 3, 3):</p>
+<p>   raise ImproperlyConfigured(“mysqlclient 1.3.3 or newer is required; you have %s” % Database.<strong>version</strong>)注释掉。</p>
+</li>
+<li><p>安装nginx等软件，使用的机器的系统是centos。</p>
+<p>yum install epel-release</p>
+<p>yum install python-devel nginx</p>
+<p>没有安装supervisor。python3安装一直报错，貌似supervisor支持python2</p>
+<p>关闭防火墙，不确定不关闭有什么影响</p>
+<p>service iptables stop </p>
+</li>
+<li><p>安装uwsgi</p>
+<p>python3 -m pip install uwsgi —upgrade</p>
+</li>
+<li><p>使用uwsgi运行项目，两种方法：</p>
+<ol>
+<li><p>第一种：执行使用命令</p>
+<p><code>uwsgi --http :8002 --chdir ``/path/to/project</code> <code>--home=``/path/to/env</code> <code>--module project.wsgi</code></p>
+<p>如果端口已被占用，则<code>lsof</code> <code>-i :8002</code>找到对应的进程，kill掉。或者修改uwsgi的端口。</p>
+</li>
+<li><p>第二种：创建配置文件在项目下创建配置文件/root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini。</p>
+<p>文件内容：</p>
+<p><code>qa_cg_uwsgi.ini file</code></p>
+<p><code>[uwsgi]</code></p>
+<p><code>Django-related settings</code></p>
+<p><code>socket = :8002</code></p>
+<p><code>the base directory (full path)</code></p>
+<p><code>chdir           = /root/qunsu/proj/qa_cg</code></p>
+<p><code>Django s wsgi file</code></p>
+<p><code>module          = qa_cg.wsgi</code></p>
+<p><code>process-related settings</code></p>
+<p><code>master</code></p>
+<p><code>master          = true</code></p>
+<p><code>maximum number of worker processes</code></p>
+<p><code>processes       = 4</code></p>
+<p><code>... with appropriate permissions - may be needed</code></p>
+<p><code>chmod-socket    = 664</code></p>
+<p><code>clear environment on exit</code></p>
+<p><code>vacuum          = true</code></p>
+<p>运行uwsgi:uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
+</li>
+<li><p>关联nginx<br>在nginx.conf配置<br>location ~  ^/ {</p>
+<pre><code>include uwsgi_params;
+uwsgi_pass 192.168.233.108:8002;
+uwsgi_read_timeout 2;
+</code></pre><p>}</p>
+</li>
+</ol>
+</li>
+<li><p>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/study/">study</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-mac下同时装python2 和python3"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/12/08/mac下同时装python2 和python3/" class="article-date">
+	  <time datetime="2017-12-08T11:28:38.598Z" itemprop="datePublished">十二月 8, 2017</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>mac下同时装python2 和python3</p>
+<ol>
+<li><p>安装xcode。（貌似可以不装）</p>
+<p>遇到的问题：mac os的版本太低。在应用商店安装是提示：不能将软件安装在Macintosh hd上,因为需要mac更高版本</p>
+<p>解决方案：升级mac os</p>
+</li>
+<li><p>安装套件管理工具homebrew</p>
+<p>a. 在终端输入：ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/install/master/install" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/install/master/install</a>)”</p>
+<p>b. 安装后输入brew doctor ，如果是出现Your system is ready to brew</p>
+</li>
+<li><p>安装python</p>
+</li>
+</ol>
+<p>​       a. 先看本机的python版本 python —version </p>
+<p>​       b. 用homebrew搜索python： brew search python</p>
+<p>​        brew search python<br>​    python ✔            boost-python        ipython             python-markdown<br>​    python3 ✔           boost-python@1.59   ipython@5           wxpython<br>​    app-engine-python   gst-python          micropython         zpython</p>
+<p>​        c. 安装python</p>
+<p>​          brew install python</p>
+<p>​          brew install python3</p>
+<p>​       遇到的问题：安装时提示安装成功但link python失败。重新用brew link python提示一样的失败原因</p>
+<p>Linking /usr/local/Cellar/python/2.7.14… Error: Permission denied @ dir_s_mkdir - /usr/local/Frameworks</p>
+<p>然后切换成管理员，如下所示</p>
+<p>➜  ~ sudo -i<br>EBJ1165:~ root# brew link python<br>Error: Running Homebrew as root is extremely dangerous and no longer supported.<br>As Homebrew does not drop privileges on installation you would be giving all<br>build scripts full access to your system.</p>
+<p>解决办法：原因是没有frameworks这个文件，只要新建这个文件sudo mkdir /usr/local/Frameworks，然后更改文件权限sudo chown $(whoami):admin /usr/local/Frameworks。或者在当前用户直接新建该文件。</p>
+<ol>
+<li><p>查看结果，通过看python的安装路径来判断是否是系统的python</p>
+<p>which python</p>
+<p>which python3</p>
+</li>
+</ol>
+<p>   参考<a href="https://stringpiggy.hpd.io/mac-osx-python3-dual-install/#step2" target="_blank" rel="external">https://stringpiggy.hpd.io/mac-osx-python3-dual-install/#step2</a></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
+    <article id="post-photoshop-mac-破解"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/09/28/photoshop-mac-破解/">photoshop mac 破解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2017/09/28/photoshop-mac-破解/" class="article-date">
+	  <time datetime="2017-09-28T02:44:05.000Z" itemprop="datePublished">九月 28, 2017</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、首先下载photoshop cc 2017 ,官网地址：<a href="http://www.adobe.com/cn/products/photoshop.html，右上角选择“免费试用”，进行下载photoshop" target="_blank" rel="external">http://www.adobe.com/cn/products/photoshop.html，右上角选择“免费试用”，进行下载photoshop</a> cc 2017即可；</p>
+<pre><code>安装成功之后，如果安装成功之后自动打开，会弹出使用天数7天；这个时候，不要点击使用，应直接将软件关闭；进行破解；
+</code></pre><p>2、下载补丁，下载地址：链接: <a href="https://pan.baidu.com/s/1eRK0IoM" target="_blank" rel="external">https://pan.baidu.com/s/1eRK0IoM</a> 密码: cw2b,解压，得到amtlib.framework文件，将文件拷贝.找到应用程序的photoshop，右键，显示包内容。打开之后，有一个Contents文件，然后点进去，会有一个Frameworks文件，将刚才解压到文件amtlib.framework拷贝进去，点击替换；（建议先备份一下要替换的文件）<br>此时可以打开photoshop程序，如果程序无法启动，有闪退现象，则需要看第三步；如果正常，以下第三步可以 省略不看；</p>
+<p>3、解决程序闪退的问题，下载补丁地址：链接: <a href="https://pan.baidu.com/s/1dFtEB2h" target="_blank" rel="external">https://pan.baidu.com/s/1dFtEB2h</a> 密码: h3y3</p>
+<pre><code> 解压后，会有一个应用图标，点击即可；如果无法执行，请为其添加权限；
+
+点击之后，再次打开photoshop程序，程序可以正常打开，并且不再提示使用7天的提示；
+</code></pre><p>来自：<a href="http://www.bigzhong.com/wenzhang/20161121/14.html" target="_blank" rel="external">http://www.bigzhong.com/wenzhang/20161121/14.html</a></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-python2-x和python3-x"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -226,189 +483,11 @@ var themeMenus = {};
 <!-- Table of Contents -->
 
   
-    <article id="post-正则表达式"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/04/正则表达式/">正则表达式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/09/04/正则表达式/" class="article-date">
-	  <time datetime="2017-09-04T09:45:41.000Z" itemprop="datePublished">九月 4, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-thumbnail">
-              <a href="/2017/09/04/正则表达式/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/9" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
-            </div>
-            <div class="entry-summary">
-            （整理自http://cuiqingcai.com/977.html ）
-正则表达式相关注解(1)数量词的贪婪模式与非贪婪模式正则表达式通常用于在文本中查找匹配的字符串。Python里数量词默认是贪婪的（在少数语言里也可能是默认非贪婪），总是尝试匹配尽可能多的字符；非贪婪的则相反，总是尝试匹配尽可能少的字符。例如：正则表达式”ab”如果用于查找”abbbc”，将找到”abbb”。而如果使用非...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2017/09/04/正则表达式/#more">阅读全文</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul>
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-python中cookie的用法"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/04/python中cookie的用法/">python中cookie的用法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/09/04/python中cookie的用法/" class="article-date">
-	  <time datetime="2017-09-04T09:11:01.000Z" itemprop="datePublished">九月 4, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-thumbnail">
-              <a href="/2017/09/04/python中cookie的用法/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/10" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
-            </div>
-            <div class="entry-summary">
-            （来自http://cuiqingcai.com/968.html ，基于python2）
-当你获取一个URL你使用一个opener(一个urllib2.OpenerDirector的实例)。在前面，我们都是使用的默认的opener，也就是urlopen。它是一个特殊的opener，可以理解成opener的一个特殊实例，传入的参数仅仅是url，data，timeout。
-如果我们需要用到Co...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2017/09/04/python中cookie的用法/#more">阅读全文</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cookie/">cookie</a></li></ul>
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-cookies详解"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/04/cookies详解/">cookies详解</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/09/04/cookies详解/" class="article-date">
-	  <time datetime="2017-09-04T06:40:47.000Z" itemprop="datePublished">九月 4, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-
-          
-            <div class="entry-thumbnail">
-              <a href="/2017/09/04/cookies详解/"><img width="250" height="175" src="http://lorempixel.com/500/350/city/5" class="attachment-thumb-featured size-thumb-featured wp-post-image" alt=""></a>
-            </div>
-            <div class="entry-summary">
-            (来自 http://blog.csdn.net/u012175089/article/details/70054806)
-HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题之一是如何管理状态。服务器端没有办法知道两个请求是否来自于同一个浏览器。那时的办法是在请求的页面中插入一个token，并且在下一次请求中将这个token返回（至服务器）。这就需要在form...
-          
-
-        
-          <p class="article-more-link">
-            <a href="/2017/09/04/cookies详解/#more">阅读全文</a>
-          </p>
-        </div>
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cookie/">cookie</a></li></ul>
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
 
 </section>
@@ -504,6 +583,42 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2018/01/17/Nginx-uWSGI-部署Django/">Nginx + uWSGI 部署Django</a></h6>
+              <span>一月 17, 2018</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/12/08/mac下同时装python2 和python3/">(no title)</a></h6>
+              <span>十二月 8, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
+              <h6 style="margin: 0;"><a href="/2017/09/28/photoshop-mac-破解/">photoshop mac 破解</a></h6>
+              <span>九月 28, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2017/09/20/python2-x和python3-x/">python2.x和python3.x</a></h6>
               <span>九月 20, 2017</span>
             </div>
@@ -534,42 +649,6 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/09/04/python中cookie的用法/">python中cookie的用法</a></h6>
-              <span>九月 4, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/09/04/cookies详解/">cookies详解</a></h6>
-              <span>九月 4, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/08/11/About-Yield/">About Yield</a></h6>
-              <span>八月 11, 2017</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -579,7 +658,7 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/课外读物/">课外读物</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/课外读物/">课外读物</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -589,7 +668,7 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说-推理/">小说, 推理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cookie/">cookie</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/">python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说-推理/">小说, 推理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/正则表达式/">正则表达式</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -599,7 +678,7 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/cookie/" style="font-size: 20px;">cookie</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/小说-推理/" style="font-size: 10px;">小说, 推理</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a>
+      <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/小说-推理/" style="font-size: 10px;">小说, 推理</a> <a href="/tags/正则表达式/" style="font-size: 10px;">正则表达式</a>
     </div>
   </div>
 
@@ -609,7 +688,7 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -623,7 +702,7 @@ HTTP cookies，通常又称作”cookies”早期Web开发面临的最大问题�
 
   <div class="clearfix container">
       <div class="site-info">
-	      &copy; 2017 Su&#39;s Blog All Rights Reserved.
+	      &copy; 2018 Su&#39;s Blog All Rights Reserved.
           
             <span id="busuanzi_container_site_uv">
               本站访客数<span id="busuanzi_value_site_uv"></span>人次  
