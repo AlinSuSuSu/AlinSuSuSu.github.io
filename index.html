@@ -112,6 +112,56 @@ var themeMenus = {};
         
           <section id="main">
   
+    <article id="post-shell脚本"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2018/02/05/shell脚本/">shell脚本</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	Posted on <a href="/2018/02/05/shell脚本/" class="article-date">
+	  <time datetime="2018-02-05T05:28:18.000Z" itemprop="datePublished">二月 5, 2018</time>
+	</a>
+
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="遇到的坑："><a href="#遇到的坑：" class="headerlink" title="遇到的坑："></a>遇到的坑：</h4><ol>
+<li>if 条件判断：<br>判断上条命令是否执行成功。报错 [0: command not found<br>是因为if语句的格式问题：if空格[空格$? -eq 0空格]; if后面加空格，条件两边也得加空格<br><code>if [ $? -eq 0 ];
+then
+echo &#39;find success&#39;
+echo $deps
+else
+echo &#39;find failed&#39;
+fi</code></li>
+</ol>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+      
+
+      
+    </footer>
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-Nginx-uWSGI-部署Django"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -223,17 +273,30 @@ var themeMenus = {};
 <p><code>clear environment on exit</code></p>
 <p><code>vacuum          = true</code></p>
 <p>运行uwsgi:uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
-</li>
-<li><p>关联nginx<br>在nginx.conf配置<br>location ~  ^/ {</p>
-<pre><code>include uwsgi_params;
-uwsgi_pass 192.168.233.108:8002;
-uwsgi_read_timeout 2;
-</code></pre><p>}</p>
+<p>以ini为配置文件启动uwsgi:</p>
+<p>uwsgi -x /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
+<p>后台运行uwsgi并把日志写到/root/qunsu/logs/uwsgi.log里面:</p>
+<p>uwsgi -d /root/qunsu/logs/uwsgi.log</p>
+<p>我用的命令：uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini -d /root/qunsu/log.log<br>关闭uwsgi服务killall  -9 uwsgi</p>
 </li>
 </ol>
 </li>
-<li><p>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</p>
-</li>
+</ol>
+<ol>
+<li><p>关联nginx<br>在nginx.conf配置</p>
+<pre><code>location ~  ^/ {
+   include uwsgi_params;
+   uwsgi_pass 192.168.233.108:8002;
+   uwsgi_read_timeout 2;
+}
+</code></pre><p>静态资源配置：</p>
+<pre><code>location ^~ /static {
+         alias  /root/qunsu/proj/qa_cg/static/;
+}
+</code></pre></li>
+</ol>
+<ol>
+<li>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</li>
 </ol>
 
       
@@ -434,55 +497,6 @@ uwsgi_read_timeout 2;
 <!-- Table of Contents -->
 
   
-    <article id="post-梦幻花-东野圭吾"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/09/20/梦幻花-东野圭吾/">梦幻花--东野圭吾</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	Posted on <a href="/2017/09/20/梦幻花-东野圭吾/" class="article-date">
-	  <time datetime="2017-09-20T08:43:35.000Z" itemprop="datePublished">九月 20, 2017</time>
-	</a>
-
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>上周末（9月17日）头昏脑涨，又无事可做，便用kindle看起书来。说实话，kindle买来那么久并没有用过几次，终于理解为什么那么多人买了之后没过多久又转手了。</p>
-<p>理论的书看起来更增添反感，故而选了东野圭吾的书，推理小说总是能勾起人的兴趣来的。他的书看过几本，但大体都忘记名字，剧情也是只有一点记忆，都是看书过于浮躁的缘故，走马观花不经大脑。。。所以此次便想记它一记，增加印象。</p>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-	<span class="ico-folder"></span>
-    <a class="article-category-link" href="/categories/课外读物/">课外读物</a>
-
-      
-  <span class="ico-tags"></span>
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小说-推理/">小说, 推理</a></li></ul>
-
-      
-
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
   <nav id="page-nav">
@@ -583,6 +597,18 @@ uwsgi_read_timeout 2;
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2018/02/05/shell脚本/">shell脚本</a></h6>
+              <span>二月 5, 2018</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2018/01/17/Nginx-uWSGI-部署Django/">Nginx + uWSGI 部署Django</a></h6>
               <span>一月 17, 2018</span>
             </div>
@@ -637,18 +663,6 @@ uwsgi_read_timeout 2;
 
           </li>
         
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/09/04/正则表达式/">正则表达式</a></h6>
-              <span>九月 4, 2017</span>
-            </div>
-
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -688,7 +702,7 @@ uwsgi_read_timeout 2;
     <h3 class="widget-title">归档</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
