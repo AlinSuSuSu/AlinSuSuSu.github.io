@@ -272,12 +272,13 @@ fi</code></li>
 <p><code>chmod-socket    = 664</code></p>
 <p><code>clear environment on exit</code></p>
 <p><code>vacuum          = true</code></p>
-<p>运行uwsgi:uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
+<p>运行uwsgi:uwsgi /-/-ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
 <p>以ini为配置文件启动uwsgi:</p>
 <p>uwsgi -x /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
 <p>后台运行uwsgi并把日志写到/root/qunsu/logs/uwsgi.log里面:</p>
 <p>uwsgi -d /root/qunsu/logs/uwsgi.log</p>
-<p>我用的命令：uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini -d /root/qunsu/log.log<br>关闭uwsgi服务killall  -9 uwsgi</p>
+<p>我用的命令：uwsgi /-/-ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini -d /root/qunsu/log.log<br>关闭uwsgi服务killall  -9 uwsgi</p>
+<p>​</p>
 </li>
 </ol>
 </li>
@@ -294,9 +295,8 @@ fi</code></li>
          alias  /root/qunsu/proj/qa_cg/static/;
 }
 </code></pre></li>
-</ol>
-<ol>
-<li>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</li>
+<li><p>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</p>
+</li>
 </ol>
 
       

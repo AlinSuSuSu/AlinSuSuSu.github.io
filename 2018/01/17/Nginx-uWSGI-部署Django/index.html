@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/f1ea3412-7e6d-4e3d-81fc-9de81b1673e1.png">
 <meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/b121a69b-92ed-4c6f-b553-d509473626ba.png">
 <meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/ccc74c82-1b4d-4c43-b9ec-7f3712962c63.png">
-<meta property="og:updated_time" content="2018-01-29T15:24:31.674Z">
+<meta property="og:updated_time" content="2018-02-07T03:53:49.505Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx + uWSGI 部署Django">
 <meta name="twitter:description" content="Linux下python环境搭建。  查看系统所有版本信息：   查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https://">
@@ -241,12 +241,13 @@ var themeMenus = {};
 <p><code>chmod-socket    = 664</code></p>
 <p><code>clear environment on exit</code></p>
 <p><code>vacuum          = true</code></p>
-<p>运行uwsgi:uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
+<p>运行uwsgi:uwsgi /-/-ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
 <p>以ini为配置文件启动uwsgi:</p>
 <p>uwsgi -x /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini</p>
 <p>后台运行uwsgi并把日志写到/root/qunsu/logs/uwsgi.log里面:</p>
 <p>uwsgi -d /root/qunsu/logs/uwsgi.log</p>
-<p>我用的命令：uwsgi –ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini -d /root/qunsu/log.log<br>关闭uwsgi服务killall  -9 uwsgi</p>
+<p>我用的命令：uwsgi /-/-ini /root/qunsu/proj/qa_cg/qa_cg_uwsgi.ini -d /root/qunsu/log.log<br>关闭uwsgi服务killall  -9 uwsgi</p>
+<p>​</p>
 </li>
 </ol>
 </li>
@@ -263,9 +264,8 @@ var themeMenus = {};
          alias  /root/qunsu/proj/qa_cg/static/;
 }
 </code></pre></li>
-</ol>
-<ol>
-<li>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</li>
+<li><p>运行nginx。进入nginx的sbin目录。./nginx -t 检查配置文件语法错误。./nginx -s reload 重新加载配置文件</p>
+</li>
 </ol>
 
       
