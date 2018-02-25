@@ -11,36 +11,27 @@
   
   
   
-  <meta name="description" content="Linux下python环境搭建。  查看系统所有版本信息：    查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https:/">
+  <meta name="description" content="Linux下python环境搭建。  查看系统所有版本信息：   查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https://">
 <meta name="keywords" content="Python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx + uWSGI 部署Django项目">
 <meta property="og:url" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/index.html">
 <meta property="og:site_name" content="Su&#39;s Blog">
-<meta property="og:description" content="Linux下python环境搭建。  查看系统所有版本信息：    查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https:/">
+<meta property="og:description" content="Linux下python环境搭建。  查看系统所有版本信息：   查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https://">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-1.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/C39916A0-3049-4C5D-A84F-DBE216A439DF.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-1.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/62EBA43A-8B4F-417D-93B3-D6934CCFE449.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-3.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/3C226119-3512-489A-885F-A1C9D30040CD.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-4.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application%20Support/QQ/Users/1224629669/QQ/Temp.db/BD132D0F-CF16-47BE-BC97-F5E46E8BF45F.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-5.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/9d128cc2-5d92-40ab-a8fe-0895e02523de.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/4ed4f083-ff43-492f-8fcd-6b9bf2e2e867.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-6.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-7.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/f1ea3412-7e6d-4e3d-81fc-9de81b1673e1.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-8.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/b121a69b-92ed-4c6f-b553-d509473626ba.png">
 <meta property="og:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-8.png">
-<meta property="og:image" content="http://yoursite.com/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application%20Support/WXWork/Temp/ScreenCapture/ccc74c82-1b4d-4c43-b9ec-7f3712962c63.png">
-<meta property="og:updated_time" content="2018-02-25T08:29:40.444Z">
+<meta property="og:updated_time" content="2018-02-25T08:35:08.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx + uWSGI 部署Django项目">
-<meta name="twitter:description" content="Linux下python环境搭建。  查看系统所有版本信息：    查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https:/">
+<meta name="twitter:description" content="Linux下python环境搭建。  查看系统所有版本信息：   查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel2.1 下载 wget https://">
 <meta name="twitter:image" content="http://yoursite.com/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-1.png">
   
     <link rel="alternate" href="/atom.xml" title="Su&#39;s Blog" type="application/atom+xml">
@@ -168,7 +159,6 @@ var themeMenus = {};
 <ol>
 <li><p>查看系统所有版本信息：</p>
 <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-1.png" alt="PIC-1.png" title="">
-<p><img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/C39916A0-3049-4C5D-A84F-DBE216A439DF.png" alt="C39916A0-3049-4C5D-A84F-DBE216A439DF"></p>
 </li>
 <li><p>查看python版本。一般系统自带python2。我用的是python3所以需要自己安装。<br>2.0 安装可能需要的依赖包yum install openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel<br>2.1 下载 wget <a href="https://www.python.org/ftp/python/3.6.0/Python-3.6.0a1.tar.xz" target="_blank" rel="external">https://www.python.org/ftp/python/3.6.0/Python-3.6.0a1.tar.xz</a></p>
 <p>2.2 解压 　tar xvf  Python-3.6.0a1.tar.xz</p>
@@ -176,13 +166,17 @@ var themeMenus = {};
 <p>​     2.3.1 进入目录./configure 配置。Configure是一个可执行脚本，它有很多选项，使用命令./configure –help输出详细的选项列表。常用的是 –prefix。比如打算把它安装到目录/usr/local/python3,于是在python3目录执行带选项的脚本./configure –prefix=/usr/local/python3执行成功后再编译、安装（make，make install）；安装完成将自动生成目录python6而且该软件所有的文件都被复制到这个目录。指定这个选项是为了以后的维护方便，如果没有用这个选项，安装过程结束后，该软件所需的软件被复制到不同的系统目录下，很难弄清楚到底复制了那些文件、都复制到哪里去了—基本上是一塌糊涂。当需要卸载软件或移植软件，只要删除这个目录就行</p>
 <p>​     2.3.2 make &amp;&amp; make install  编译（make）并安装（make install）</p>
 <p>​     如果编译遇到问题：</p>
-<p><img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-1.png" alt="PIC-1.png" title=""><img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/62EBA43A-8B4F-417D-93B3-D6934CCFE449.png" alt="62EBA43A-8B4F-417D-93B3-D6934CCFE449"></p>
+<p>​    <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-1.png" alt="PIC-1.png" title=""></p>
 </li>
 </ol>
-<p>   根据需要安装对应的模块</p>
-<img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-3.png" alt="PIC-3.png" title="">   <img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/3C226119-3512-489A-885F-A1C9D30040CD.png" alt="3C226119-3512-489A-885F-A1C9D30040CD"><br><br>   2.4 查看是否安装成功：python3<br><br><img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-4.png" alt="PIC-4.png" title="">
-<p>   <img src="/Users/user/Library/Containers/com.tencent.qq/Data/Library/Application Support/QQ/Users/1224629669/QQ/Temp.db/BD132D0F-CF16-47BE-BC97-F5E46E8BF45F.png" alt="BD132D0F-CF16-47BE-BC97-F5E46E8BF45F"><br>   如果还是提示python3命令不存在，创建软链<br>   ln -s /usr/local/python3.6/bin/python3 /usr/bin/python3</p>
-<ol>
+<pre><code>根据需要安装对应的模块
+</code></pre><p>   ​    <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-3.png" alt="PIC-3.png" title="">   </p>
+<p>   2.4 查看是否安装成功：python3 </p>
+<p>​    <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-4.png" alt="PIC-4.png" title=""></p>
+<pre><code>如果还是提示python3命令不存在，创建软链
+
+  ln -s /usr/local/python3.6/bin/python3 /usr/bin/python3
+</code></pre><ol>
 <li><p>pip3 。一般python3源码会自带pip3，所以不需要另行安装。查看pip3的版本：python3 -m pip -V。之前不清楚python3自带pip3.所以自己安装了，</p>
 <p>pip下载：wget <a href="https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9" target="_blank" rel="external">https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da33009719497f01a4ba69d63c9</a></p>
 <p>安装pip：</p>
@@ -200,24 +194,18 @@ var themeMenus = {};
 <li><p>安装虚拟环境。python3 -m pip install virtualenv 。</p>
 <p>5.1 查看路径，which virtualenv找到路径后创建虚拟环境：/usr/local/bin/virtualenv my_work (my_work是我的虚拟环境名称)</p>
 <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-5.png" alt="PIC-5.png" title="">
-<p>​</p>
-<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/9d128cc2-5d92-40ab-a8fe-0895e02523de.png" alt="9d128cc2-5d92-40ab-a8fe-0895e02523de"></p>
-<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/4ed4f083-ff43-492f-8fcd-6b9bf2e2e867.png" alt="4ed4f083-ff43-492f-8fcd-6b9bf2e2e867"></p>
 <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-6.png" alt="PIC-6.png" title="">
 <p>5.2 进入虚拟环境目录/usr/local/bin/my_work，然后激活 source bin/activate</p>
 <p>5.3 进入my_work的bin目录，安装依赖包pip3 install -r requirements.txt(这个要写是django项目的requirements.txt的绝对路径)。</p>
 <p>安装成功后，如下所示：</p>
 <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-7.png" alt="PIC-7.png" title="">
-<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/f1ea3412-7e6d-4e3d-81fc-9de81b1673e1.png" alt="f1ea3412-7e6d-4e3d-81fc-9de81b1673e1"></p>
 <p>如果没有安装项目对应的扩展包，在运行项目的时候则会出现一下问题。</p>
 <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-8.png" alt="PIC-8.png" title="">
-<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/b121a69b-92ed-4c6f-b553-d509473626ba.png" alt="b121a69b-92ed-4c6f-b553-d509473626ba"></p>
 <p>如果使用完毕需要退出虚拟环境：deactivates</p>
 </li>
 <li><p>运行开发服务器测试，进入项目目录（/root/qunsu/proj/qa_cg），修改子目录qa_cg/settings.py文件中的ALLOWED_HOSTS = [],添加上部署的机器的ip。在虚拟环境下运行 python3 /home/tester/qunsu/qa_cg/manage.py runserver 0.0.0.0:8000。确保能正常打开网站。</p>
 <p>在运行的时候如果报错：</p>
 <img src="/2018/01/17/Nginx-uWSGI-部署Django项目/PIC-8.png" alt="PIC-8.png" title="">
-<p><img src="/Users/user/Library/Containers/com.tencent.WeWorkMac/Data/Library/Application Support/WXWork/Temp/ScreenCapture/ccc74c82-1b4d-4c43-b9ec-7f3712962c63.png" alt="ccc74c82-1b4d-4c43-b9ec-7f3712962c63"></p>
 <p>找到报错的代码（base.py）。然后将if version &lt; (1, 3, 3):</p>
 <p>   raise ImproperlyConfigured(“mysqlclient 1.3.3 or newer is required; you have %s” % Database.<strong>version</strong>)注释掉。</p>
 </li>
